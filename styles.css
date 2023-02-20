@@ -1,0 +1,71 @@
+body {
+  background-color: lightyellow;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hi {
+  height: 50px;
+  width: 120px;
+}
+
+.category {
+  display: flex;
+  flex-direction: column;
+}
+
+.hello {
+  height: 50px;
+  width: 120px;
+}
+
+.how {
+  height: 50px;
+  width: 120px;
+}
+
+.task {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter {
+  display: flex;
+  flex-direction: column;
+}
+
+#categories {
+  height: 50px;
+  width: 120px;
+}
+
+#search {
+  height: 50px;
+  width: 120px;
+}
+
+#todo {
+  height: 50px;
+  width: 120px;
+}
+
+#date {
+  height: 50px;
+  width: 120px;
+}
+
+#hnm {
+  height: 50px;
+  width: 120px;
+}
+
+#filterCategory {
+  height: 50px;
+  width: 150px;
+}
+
+#dateFilter {
+  height: 50px;
+  width: 150px;
+}

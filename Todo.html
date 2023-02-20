@@ -1,0 +1,150 @@
+     <!DOCTYPE html>
+     <html lang="en">
+     <head>
+         <meta charset="UTF-8">
+         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <title>ToDo List</title>
+         <link rel="stylesheet" href="styles.css">
+     </head>
+     <body>
+        <h1>Your Todo List!</h1>
+         <div class="category">
+         <h2>Add a Category</h2>
+         <input class="hi"type="text" id="category" placeholder="Add category">
+         <button onclick='addCategory()'class="hello">Add a category</button>
+         <br\>
+         <button onclick='delCategory()' class="how">Delete a category</button>
+         <br\>
+         </div>
+         <br>
+         <div class="task">
+         <h2>Add a Task</h2>
+         <select name="categories" id="categories">
+             <option disabled selected>Select <a href=""></a> Category</option>
+         </select>
+         <br>
+         <br>
+         <input type="text" id="search" placeholder="Search a Task" onkeyup="searchFunction()">
+         <br>
+         <br>
+         <input type="text" id="todo" placeholder="Enter a task">
+         <input type="date" id="date">
+     
+         <button id = "hnm" onclick="onAdd()">Add a Task</button>
+         </div>
+         <br>
+         <br>
+         <div class="filter">
+             <h2>Filter</h2>
+             <h3>Filter according to Category</h3>
+             <select name="categories" id="filterCategory" onchange="filterByCategory()">
+                 <option disabled selected>Select a Category</option>
+             </select>
+             <br>
+             <br>
+             <h3>Filter according to Date</h3>
+             <input type="date" id="dateFilter" onchange="filterByDate()">
+     
+         </div>
+         <div id="todo-list" class="todolist"></div>
+         <script>
+             let todos = [];
+             let categories = [];
+             const todo_list = document.getElementById('todo-list');
+             function filterByDate(){
+                 const date = document.getElementById('dateFilter').value;
+                 todo_list.innerHTML = "";
+                 todos.forEach((curItem, i) => {
+                     if (curItem.date == date) {
+                         console.log("Inside");
+                         todo_list.innerHTML += `<li id=${i}><input type='checkbox' onclick='BoxTicked(${i})'>` + `${curItem.name}` + ` ${curItem.date}` + `</li><button onclick='deleteTask(${i})'>Delete</button>`;
+                     }
+                 })
+     
+             }
+             function filterByCategory(){
+                 const category = document.getElementById('filterCategory').value;
+                 todo_list.innerHTML = "";
+                     todos.forEach((curItem, i) => {
+                         if (curItem.category == category) {
+                             console.log("gone inside")
+                             todo_list.innerHTML += `<li id=${i}><input type='checkbox' onclick='BoxTicked(${i})'>` + `${curItem.name}` + ` ${curItem.date}` + `</li><button onclick='deleteTask(${i})'>Delete</button>`;
+     
+                         }
+                     })
+             }
+             function BoxTicked(checkId) {
+                     todo_list.innerHTML="";
+                     todos.forEach((curItem, i) => {
+                         todos[checkId].status = true;
+                         if (checkId == i || todos[checkId].status==true) {
+                             todo_list.innerHTML += `<s><li id=${i}>` + `${curItem}` + `</li></s><button onclick='deleteTask(${i})'>Delete</button>`;
+                         }
+                         else {
+                             todo_list.innerHTML += `<li id=${i}><input type='checkbox' onclick='BoxTicked(${i})'>` + `${curItem}` + `</li><button onclick='deleteTask(${i})'>Delete</button>`;
+     
+                         }
+                     })
+             }
+             function display(){
+                 todo_list.innerHTML = "";
+                 for(let j=0;j<categories.length;j++){
+                     todo_list.innerHTML +=`<h3>${categories[j]}</h3>`;
+                     todos.forEach((curItem, i) => {
+                         if(curItem.category == categories[j]){
+                             console.log("gone inside")
+                             todo_list.innerHTML += `<li id=${i}><input type='checkbox' onclick='BoxTicked(${i})'>` + `${curItem.name}` + ` ${curItem.date}` + `</li><button onclick='deleteTask(${i})'>Delete</button>`;
+     
+                         }
+                     })
+                 }
+             }
+             function addCategory(){
+                 const category = document.getElementById('category');
+                 let selectCat = document.getElementById('categories');
+                 let filterCat = document.getElementById('filterCategory');
+                 if(!categories.includes(category.value)){
+                     categories.push(category.value);
+                     selectCat.innerHTML += `<option value=${category.value}>${category.value}</option>`
+                     filterCat.innerHTML += `<option value=${category.value}>${category.value}</option>`
+     
+                 }
+                 category.value = ""; 
+                 console.log("selectCat");
+             }
+            //  function delCategory(){
+     
+            //  }
+             function onAdd(){
+                 const todo = document.getElementById('todo').value;
+                 const date = document.getElementById('date').value;
+                 const category = document.getElementById('categories').value;
+                 let newTodo = {
+                     name:todo,
+                     status:false,
+                     category:category,
+                     date:(date==="")? new Date().toJSON().slice(0, 10) :date
+                 }
+                 todos.push(newTodo);
+                 todo.value = "";
+                 display();  
+             }
+     
+             function deleteTask(j){
+                 console.log(todos);
+                 todos.splice(j,1);
+                 display();
+             }
+             function searchFunction(){
+                 const searchVal = document.getElementById("search").value;
+                 todo_list.innerHTML = "";
+                 todos.forEach((curItem,i)=>{
+                     if(curItem.name.includes(searchVal)){
+                         todo_list.innerHTML += `<li id=${i}><input type='checkbox' onclick='BoxTicked(${i})'>` + `${curItem}`+ `</li><button onclick='deleteTask(${i})'>Delete</button>`;
+                     }
+                 })
+             }
+         </script>
+     </body>
+     </html>
